@@ -14,13 +14,21 @@ package frc.robot;
  */
 public final class Constants {
   // Ports
-  public static final int leftFrontPort = 1;
-  public static final int leftRearPort = 2;
-  public static final int rightFrontPort = 3;
+  public static final int leftFrontPort = 7;
+  public static final int leftRearPort = 5;
+  public static final int rightFrontPort = 1;
   public static final int rightRearPort = 4;
 
   public static final int rotationPort = 0;
-  public static final int clampPort = 0;
+  public static final int clampPort = 6;
+  public static final int winchPort = 2;
+  public static final int stopSpeed = 0;
+  public static final int winchSpeed = 1;
+  public static final int winchSpeed2 = 1;
+  public static final double speed = .5;
+  public static final int move = 1;
+  public static final int turn = 2;
+  public static final double driveSpeed = .5;
 
   
 }

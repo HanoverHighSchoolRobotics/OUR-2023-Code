@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -29,14 +30,16 @@ public class Drivetrain extends SubsystemBase {
   MotorControllerGroup rightDrive;
 
   SlewRateLimiter filter;
+ 
+
 
   public Drivetrain() {
     
     //Assigning ports to Motors
-    leftFrontMotor = new CANSparkMax(Constants.leftFrontPort, MotorType.kBrushed);
-    leftRearMotor = new CANSparkMax(Constants.leftRearPort, MotorType.kBrushed);
-    rightFrontMotor = new CANSparkMax(Constants.rightFrontPort, MotorType.kBrushed);
-    rightRearMotor = new CANSparkMax(Constants.rightRearPort, MotorType.kBrushed);
+    leftFrontMotor = new CANSparkMax(Constants.leftFrontPort, MotorType.kBrushless);
+    leftRearMotor = new CANSparkMax(Constants.leftRearPort, MotorType.kBrushless);
+    rightFrontMotor = new CANSparkMax(Constants.rightFrontPort, MotorType.kBrushless);
+    rightRearMotor = new CANSparkMax(Constants.rightRearPort, MotorType.kBrushless);
 
     //Differentiating between right and left side of robot
     leftDrive = new MotorControllerGroup(leftRearMotor, leftFrontMotor);
@@ -65,7 +68,12 @@ public class Drivetrain extends SubsystemBase {
     robotDrive.arcadeDrive(filter.calculate(x), y);
 
   }
-
+  public void joyStickDrive(Joystick driveWithJoySticks){
+    robotDrive.arcadeDrive((driveWithJoySticks.getRawAxis(Constants.move) * Constants.driveSpeed), -((driveWithJoySticks.getRawAxis(Constants.turn) * -1) * Constants.driveSpeed));
+  }
+  public void driveBackward(){
+    robotDrive.tankDrive(Constants.speed, Constants.speed);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
