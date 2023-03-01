@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveRobot extends CommandBase {
+public class IdleRobot extends CommandBase {
   
   public Joystick Flight2;
   public Drivetrain driveTrain;
 
-  public DriveRobot(Drivetrain dt, Joystick fli) {
+  public IdleRobot(Drivetrain dt, Joystick fli) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveTrain = dt;
     Flight2 = fli;
@@ -31,7 +31,8 @@ public class DriveRobot extends CommandBase {
   @Override
   public void execute() {
 
-     driveTrain.driveRobot(Joystick.kDefaultYChannel, Joystick.kDefaultXChannel);
+    System.out.println("Idling");
+     //driveTrain.driveRobot(Joystick.kDefaultYChannel, Joystick.kDefaultXChannel);
 
   }
 

@@ -16,10 +16,10 @@ public final class Constants {
   // Ports
   public static final int leftFrontPort = 7;
   public static final int leftRearPort = 5;
-  public static final int rightFrontPort = 1;
+  public static final int rightFrontPort = 9;
   public static final int rightRearPort = 4;
 
-  public static final int rotationPort = 0;
+  public static final int rotationPort = 8;
   public static final int clampPort = 6;
   public static final int winchPort = 2;
   public static final int stopSpeed = 0;

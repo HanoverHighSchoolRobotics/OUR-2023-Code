@@ -6,6 +6,7 @@ package frc.robot;
 
 
 import frc.robot.commands.DriveRobot;
+import frc.robot.commands.IdleRobot;
 import frc.robot.commands.RotateClaw;
 import frc.robot.commands.RunClamp;
 import frc.robot.commands.WinchU;
@@ -26,19 +27,21 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+  public static Joystick Flight1;
+  public static Joystick Flight2;
   // The robot's subsystems and commands are defined here...
 
   private final Drivetrain drivetrain = new Drivetrain();
   private final Claw claw = new Claw();
   private final Winch winch = new Winch();
 
-  private final Joystick Flight1 = new Joystick(0);
-  private final Joystick Flight2 = new Joystick(1);
+
 
   
 
   private final DriveRobot driveRobot = new DriveRobot(drivetrain, Flight2);
-
+  private final DriveRobot idleRobot = new DriveRobot(drivetrain, Flight2);
  
   // Replace with CommandPS4Controller or CommandJoystick if needed
   
@@ -47,8 +50,12 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
 
-    drivetrain.setDefaultCommand(driveRobot);
-    driveRobot.addRequirements(drivetrain);
+    Flight1 = new Joystick(0);
+    Flight2 = new Joystick(1);
+
+
+    //drivetrain.setDefaultCommand(driveRobot);
+    //driveRobot.addRequirements(drivetrain);
   
 
     configureBindings();
@@ -57,6 +64,8 @@ public class RobotContainer {
 
 
   private void configureBindings() {
+
+    drivetrain.setDefaultCommand(idleRobot);
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
  
     JoystickButton Flight1Button0 = new JoystickButton(Flight1, 1);
@@ -77,8 +86,8 @@ public class RobotContainer {
     Flight1Button6.onTrue(new RotateClaw(claw, .5));
     Flight1Button6.onFalse(new RotateClaw(claw, Constants.stopSpeed));
 
-    Flight1Button3.onTrue(new WinchU(winch, .5));
-    Flight1Button3.onFalse(new WinchU(winch, Constants.stopSpeed));
+    //Flight1Button3.onTrue(new WinchU(winch, .5));
+    //Flight1Button3.onFalse(new WinchU(winch, Constants.stopSpeed));
 
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,

@@ -14,14 +14,15 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.DriveRobot;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
 
   // Variables
-  CANSparkMax leftFrontMotor;
+  CANSparkMax leftFrontMotorLeader;
   CANSparkMax leftRearMotor;
-  CANSparkMax rightFrontMotor;
+  CANSparkMax rightFrontMotorLeader;
   CANSparkMax rightRearMotor;
 
   DifferentialDrive robotDrive;
@@ -36,29 +37,30 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
     
     //Assigning ports to Motors
-    leftFrontMotor = new CANSparkMax(Constants.leftFrontPort, MotorType.kBrushless);
+    leftFrontMotorLeader = new CANSparkMax(Constants.leftFrontPort, MotorType.kBrushless);
     leftRearMotor = new CANSparkMax(Constants.leftRearPort, MotorType.kBrushless);
-    rightFrontMotor = new CANSparkMax(Constants.rightFrontPort, MotorType.kBrushless);
+    rightFrontMotorLeader = new CANSparkMax(Constants.rightFrontPort, MotorType.kBrushless);
     rightRearMotor = new CANSparkMax(Constants.rightRearPort, MotorType.kBrushless);
 
     //Differentiating between right and left side of robot
-    leftDrive = new MotorControllerGroup(leftRearMotor, leftFrontMotor);
-    rightDrive = new MotorControllerGroup(rightFrontMotor, rightRearMotor);
+    //leftDrive = new MotorControllerGroup(leftRearMotor, leftFrontMotorLeader);
+    //rightDrive = new MotorControllerGroup(rightFrontMotorLeader, rightRearMotor);
+
 
     filter = new SlewRateLimiter(.3);
 
-    robotDrive = new DifferentialDrive(rightDrive, leftDrive);
+    robotDrive = new DifferentialDrive(leftFrontMotorLeader, rightFrontMotorLeader);
 
     // Right side needs to be inverted
-    leftFrontMotor.setInverted(false);
-    rightFrontMotor.setInverted(true);
-    leftRearMotor.setInverted(false);
-    rightRearMotor.setInverted(true);
+    leftFrontMotorLeader.setInverted(true);
+    rightFrontMotorLeader.setInverted(true);
+    leftRearMotor.follow(leftFrontMotorLeader, false);
+    rightRearMotor.follow(rightFrontMotorLeader,false);
 
   // Sets the motors to brake mode
-    leftFrontMotor.setIdleMode(IdleMode.kBrake);
+    leftFrontMotorLeader.setIdleMode(IdleMode.kBrake);
     leftRearMotor.setIdleMode(IdleMode.kBrake);
-    rightFrontMotor.setIdleMode(IdleMode.kBrake);
+    rightFrontMotorLeader.setIdleMode(IdleMode.kBrake);
     rightRearMotor.setIdleMode(IdleMode.kBrake);
 
   }
@@ -68,14 +70,18 @@ public class Drivetrain extends SubsystemBase {
     robotDrive.arcadeDrive(filter.calculate(x), y);
 
   }
-  public void joyStickDrive(Joystick driveWithJoySticks){
-    robotDrive.arcadeDrive((driveWithJoySticks.getRawAxis(Constants.move) * Constants.driveSpeed), -((driveWithJoySticks.getRawAxis(Constants.turn) * -1) * Constants.driveSpeed));
-  }
-  public void driveBackward(){
-    robotDrive.tankDrive(Constants.speed, Constants.speed);
-  }
+  //public void joyStickDrive(Joystick driveWithJoySticks){
+    //robotDrive.arcadeDrive((DriveRobot.getRawAxis(Constants.move) * Constants.driveSpeed), -((driveWithJoySticks.getRawAxis(Constants.turn) * -1) * Constants.driveSpeed));
+ // }
+  //public void driveBackward(){
+//robotDrive.tankDrive(Constants.speed, Constants.speed);
+ // }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void stop(){
+    robotDrive.stopMotor();
   }
 }
