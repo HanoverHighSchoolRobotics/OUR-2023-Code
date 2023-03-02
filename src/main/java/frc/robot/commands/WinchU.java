@@ -9,15 +9,22 @@ import frc.robot.Constants;
 
 public class WinchU extends CommandBase {
   
-    Winch winch;
+  public Winch winch;
+  
+  
 
   public WinchU(Winch w) {
     winch = w;
-    addRequirements(winch);
+    
+}
 
-  }
+public WinchU(Winch winch2, int stopspeed) {
+}
 
-  // Called when the command is initially scheduled.
+public WinchU(Winch winch2, double d) {
+}
+
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 

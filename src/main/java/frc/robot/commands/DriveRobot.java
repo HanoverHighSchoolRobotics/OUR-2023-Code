@@ -31,7 +31,7 @@ public class DriveRobot extends CommandBase {
   @Override
   public void execute() {
 
-     driveTrain.driveRobot(Joystick.kDefaultYChannel, Joystick.kDefaultXChannel);
+     driveTrain.driveRobot(-Flight2.getRawAxis(0), Flight2.getRawAxis(1));
 
   }
 

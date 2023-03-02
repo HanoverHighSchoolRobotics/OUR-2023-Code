@@ -6,7 +6,6 @@ package frc.robot;
 
 
 import frc.robot.commands.DriveRobot;
-import frc.robot.commands.IdleRobot;
 import frc.robot.commands.RotateClaw;
 import frc.robot.commands.RunClamp;
 import frc.robot.commands.WinchU;
@@ -34,14 +33,13 @@ public class RobotContainer {
 
   private final Drivetrain drivetrain = new Drivetrain();
   private final Claw claw = new Claw();
-  private final Winch winch = new Winch();
+  //private final Winch winch = new Winch();
 
 
 
   
 
-  private final DriveRobot driveRobot = new DriveRobot(drivetrain, Flight2);
-  private final DriveRobot idleRobot = new DriveRobot(drivetrain, Flight2);
+  private final DriveRobot driveRobot; 
  
   // Replace with CommandPS4Controller or CommandJoystick if needed
   
@@ -50,12 +48,13 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
 
-    Flight1 = new Joystick(0);
-    Flight2 = new Joystick(1);
+    // Flight2 is Driver joystick
+    Flight1 = new Joystick(Constants.Flight1Port);
+    Flight2 = new Joystick(Constants.Flight2Port);
 
-
-    //drivetrain.setDefaultCommand(driveRobot);
-    //driveRobot.addRequirements(drivetrain);
+    driveRobot = new DriveRobot(drivetrain, Flight1);
+    drivetrain.setDefaultCommand(driveRobot);
+    driveRobot.addRequirements(drivetrain);
   
 
     configureBindings();
@@ -65,14 +64,14 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    drivetrain.setDefaultCommand(idleRobot);
+    drivetrain.setDefaultCommand(driveRobot);
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
  
     JoystickButton Flight1Button0 = new JoystickButton(Flight1, 1);
     JoystickButton Flight1Button1 = new JoystickButton(Flight1, 2);
     JoystickButton Flight1Button5 = new JoystickButton(Flight1, 5);
     JoystickButton Flight1Button6 = new JoystickButton(Flight1, 6);
-    JoystickButton Flight1Button3 = new JoystickButton(Flight1, 3);
+   // JoystickButton Flight1Button3 = new JoystickButton(Flight1, 3);
 
     Flight1Button0.onTrue(new RunClamp(claw, -.5));
     Flight1Button0.onFalse(new RunClamp(claw, Constants.stopSpeed));
