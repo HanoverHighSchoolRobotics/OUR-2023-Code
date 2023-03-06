@@ -1,4 +1,4 @@
-package frc.robot.commands;
+ package frc.robot.commands;
 
 
 import frc.robot.subsystems.Winch;
@@ -31,7 +31,7 @@ public WinchU(Winch winch2, double d) {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    winch.move(Constants.winchSpeed, Constants.winchSpeed2);
+    winch.RunWinch(Constants.winchSpeed);
 
 
   }
@@ -51,3 +51,4 @@ public WinchU(Winch winch2, double d) {
     return false;
   }
 }
+

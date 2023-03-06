@@ -22,16 +22,18 @@ public final class Constants {
   //Non-drive Ports
   public static final int rotationPort = 8;
   public static final int clampPort = 6;
-  //public static final int winchPort = 2;
+  public static final int winchPort = 2;
   public static final int Flight2Port = 0;
   public static final int Flight1Port = 1;
 
   //Speeds
   public static final int stopSpeed = 0;
-  public static final int winchSpeed = 1;
-  public static final int winchSpeed2 = 1;
+  public static final double winchSpeed = .1;
+  public static final double winchSpeedD = -.1;
   public static final double speed = .5;
+  public static final double clampSpeed = .3;
   public static final double driveSpeed = .5;
+  public static final double rotateSpeed = .1;
 
 
   public static final int move = 1;

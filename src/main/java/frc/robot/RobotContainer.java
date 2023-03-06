@@ -9,6 +9,7 @@ import frc.robot.commands.DriveRobot;
 import frc.robot.commands.RotateClaw;
 import frc.robot.commands.RunClamp;
 import frc.robot.commands.WinchU;
+import frc.robot.commands.WinchU;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Winch;
@@ -33,7 +34,7 @@ public class RobotContainer {
 
   private final Drivetrain drivetrain = new Drivetrain();
   private final Claw claw = new Claw();
-  //private final Winch winch = new Winch();
+  private final Winch winch = new Winch();
 
 
 
@@ -67,26 +68,30 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(driveRobot);
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
  
-    JoystickButton Flight1Button0 = new JoystickButton(Flight1, 1);
-    JoystickButton Flight1Button1 = new JoystickButton(Flight1, 2);
-    JoystickButton Flight1Button5 = new JoystickButton(Flight1, 5);
-    JoystickButton Flight1Button6 = new JoystickButton(Flight1, 6);
-   // JoystickButton Flight1Button3 = new JoystickButton(Flight1, 3);
+    JoystickButton Flight2Button1 = new JoystickButton(Flight2, 1);
+    JoystickButton Flight2Button2 = new JoystickButton(Flight2, 2);
+    JoystickButton Flight2Button5 = new JoystickButton(Flight2, 5);
+    JoystickButton Flight2Button6 = new JoystickButton(Flight2, 6);
+    JoystickButton Flight2Button3 = new JoystickButton(Flight2, 3);
+    JoystickButton Flight2Button4 = new JoystickButton(Flight2, 4);
 
-    Flight1Button0.onTrue(new RunClamp(claw, -.5));
-    Flight1Button0.onFalse(new RunClamp(claw, Constants.stopSpeed));
+    Flight2Button1.onTrue(new RunClamp(claw, -Constants.clampSpeed));
+    Flight2Button1.onFalse(new RunClamp(claw, Constants.stopSpeed));
     
-    Flight1Button1.onTrue(new RunClamp(claw, .5));
-    Flight1Button1.onFalse(new RunClamp(claw, Constants.stopSpeed));
+     Flight2Button2.onTrue(new RunClamp(claw, Constants.clampSpeed));
+     Flight2Button2.onFalse(new RunClamp(claw, Constants.stopSpeed));
 
-    Flight1Button5.onTrue(new RotateClaw(claw, -.5));
-    Flight1Button5.onFalse(new RotateClaw(claw, Constants.stopSpeed));
+     Flight2Button5.onTrue(new RotateClaw(claw, Constants.rotateSpeed));
+     Flight2Button5.onFalse(new RotateClaw(claw, Constants.stopSpeed));
 
-    Flight1Button6.onTrue(new RotateClaw(claw, .5));
-    Flight1Button6.onFalse(new RotateClaw(claw, Constants.stopSpeed));
+     Flight2Button6.onTrue(new RotateClaw(claw, -Constants.rotateSpeed));
+     Flight2Button6.onFalse(new RotateClaw(claw, Constants.stopSpeed));
 
-    //Flight1Button3.onTrue(new WinchU(winch, .5));
-    //Flight1Button3.onFalse(new WinchU(winch, Constants.stopSpeed));
+    Flight2Button4.onTrue(new WinchU(winch, Constants.winchSpeed));
+    Flight2Button4.onFalse(new WinchU(winch, Constants.stopSpeed));
+
+    Flight2Button3.onTrue(new WinchU(winch, -Constants.winchSpeed));
+    Flight2Button3.onFalse(new WinchU(winch, Constants.stopSpeed));
 
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,

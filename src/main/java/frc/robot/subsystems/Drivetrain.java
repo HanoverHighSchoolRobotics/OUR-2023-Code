@@ -47,12 +47,12 @@ public class Drivetrain extends SubsystemBase {
     //rightDrive = new MotorControllerGroup(rightFrontMotorLeader, rightRearMotor);
 
 
-    filter = new SlewRateLimiter(.5);
+    //filter = new SlewRateLimiter(.5);
 
     robotDrive = new DifferentialDrive(leftFrontMotorLeader, rightFrontMotorLeader);
 
     // Right side needs to be inverted
-    leftFrontMotorLeader.setInverted(true);
+    //leftFrontMotorLeader.setInverted(true);
     rightFrontMotorLeader.setInverted(true);
     leftRearMotor.follow(leftFrontMotorLeader, false);
     rightRearMotor.follow(rightFrontMotorLeader,false);
@@ -67,7 +67,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void driveRobot(double x, double y) {
 
-    robotDrive.arcadeDrive(filter.calculate(x) * Constants.driveSpeed, (y * -1) * Constants.driveSpeed);
+    robotDrive.arcadeDrive(x * Constants.driveSpeed, (y * -1) * Constants.driveSpeed);
 
   }
   //public void joyStickDrive(Joystick driveRobot){
