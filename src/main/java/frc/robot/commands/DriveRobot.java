@@ -31,7 +31,7 @@ public class DriveRobot extends CommandBase {
   @Override
   public void execute() {
 
-     driveTrain.driveRobot(-Flight2.getRawAxis(0), Flight2.getRawAxis(1));
+     driveTrain.driveRobot(-Flight2.getRawAxis(1), Flight2.getRawAxis(3));
 
   }
 
