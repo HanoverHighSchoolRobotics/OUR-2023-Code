@@ -42,6 +42,8 @@ public class Drivetrain extends SubsystemBase {
     rightFrontMotorLeader = new CANSparkMax(Constants.rightFrontPort, MotorType.kBrushless);
     rightRearMotor = new CANSparkMax(Constants.rightRearPort, MotorType.kBrushless);
 
+    
+
     //Differentiating between right and left side of robot
     //leftDrive = new MotorControllerGroup(leftRearMotor, leftFrontMotorLeader);
     //rightDrive = new MotorControllerGroup(rightFrontMotorLeader, rightRearMotor);

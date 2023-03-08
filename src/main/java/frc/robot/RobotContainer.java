@@ -5,15 +5,18 @@
 package frc.robot;
 
 
+import frc.robot.commands.ArmPID;
 import frc.robot.commands.DriveRobot;
 import frc.robot.commands.RotateClaw;
+import frc.robot.commands.RunArm;
 import frc.robot.commands.RunClamp;
-import frc.robot.commands.WinchU;
-import frc.robot.commands.WinchU;
+import frc.robot.commands.RunWinch;
+// import frc.robot.commands.WinchU;
+// import frc.robot.commands.WinchU;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Winch;
-
+//import frc.robot.subsystems.Winch;
+import frc.robot.subsystems.Winch2;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -34,7 +37,7 @@ public class RobotContainer {
 
   private final Drivetrain drivetrain = new Drivetrain();
   private final Claw claw = new Claw();
-  private final Winch winch = new Winch();
+  private final Winch2 winch = new Winch2();
 
 
 
@@ -74,6 +77,10 @@ public class RobotContainer {
     JoystickButton Flight2Button6 = new JoystickButton(Flight2, 6);
     JoystickButton Flight2Button3 = new JoystickButton(Flight2, 3);
     JoystickButton Flight2Button4 = new JoystickButton(Flight2, 4);
+    JoystickButton Flight2Button7 = new JoystickButton(Flight2, 7);
+    JoystickButton Flight2Button8 = new JoystickButton(Flight2, 8);
+    JoystickButton Flight2Button9 = new JoystickButton(Flight2, 9);
+
 
     Flight2Button1.onTrue(new RunClamp(claw, -Constants.clampSpeed));
     Flight2Button1.onFalse(new RunClamp(claw, Constants.stopSpeed));
@@ -87,11 +94,20 @@ public class RobotContainer {
      Flight2Button6.onTrue(new RotateClaw(claw, -Constants.rotateSpeed));
      Flight2Button6.onFalse(new RotateClaw(claw, Constants.stopSpeed));
 
-    Flight2Button4.onTrue(new WinchU(winch, Constants.winchSpeed));
-    Flight2Button4.onFalse(new WinchU(winch, Constants.stopSpeed));
+    Flight2Button4.onTrue(new RunWinch(winch, Constants.winchSpeed));
+    Flight2Button4.onFalse(new RunWinch(winch, Constants.stopSpeed));
 
-    Flight2Button3.onTrue(new WinchU(winch, -Constants.winchSpeed));
-    Flight2Button3.onFalse(new WinchU(winch, Constants.stopSpeed));
+    Flight2Button3.onTrue(new RunWinch(winch, -Constants.winchSpeed));
+    Flight2Button3.onFalse(new RunWinch(winch, Constants.stopSpeed));
+
+    Flight2Button7.onTrue(new RunArm(claw, -Constants.armSpeed));
+    Flight2Button7.onFalse(new RunArm(claw, Constants.stopSpeed));
+
+    Flight2Button8.onTrue(new RunArm(claw, Constants.armSpeedU));
+    Flight2Button8.onFalse(new RunArm(claw, Constants.stopSpeed));
+
+    Flight2Button9.onTrue(new ArmPID(1500, claw));
+    Flight2Button9.onFalse(new RunArm(claw, Constants.stopSpeed ));
 
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
