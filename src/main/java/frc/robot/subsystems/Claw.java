@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -20,6 +21,8 @@ public class Claw extends SubsystemBase {
   CANSparkMax clampMotor;
   CANSparkMax armMotor;
   Encoder armEncoder;
+  Encoder rotateEncoder;
+  RelativeEncoder clampEncoder;
   
 
   public Claw() {
@@ -33,6 +36,10 @@ public class Claw extends SubsystemBase {
     armMotor.setIdleMode(IdleMode.kCoast);
 
     armEncoder = new Encoder(8,9, false, Encoder.EncodingType.k4X);
+    rotateEncoder = new Encoder(4, 5);   // wont run until we know ports so ask gabe about it
+    clampEncoder = clampMotor.getEncoder();
+   
+    clampEncoder.setPosition(0.0);
 
    
 
@@ -58,9 +65,21 @@ public class Claw extends SubsystemBase {
 
    }
 
+   public double getRotatePosition() {
+    return rotateEncoder.get();
+   }
+
+   public double getClampPosition() {
+
+    return clampEncoder.getPosition();
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Arm Encoder Ticks", armEncoder.get());
+    SmartDashboard.putNumber("Rotate Encoder Ticks", rotateEncoder.get());
+    SmartDashboard.putNumber("Clamp Encoder Ticks", clampEncoder.getPosition());
   }
 }

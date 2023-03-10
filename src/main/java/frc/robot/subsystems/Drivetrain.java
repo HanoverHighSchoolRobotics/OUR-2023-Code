@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -12,6 +13,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.DriveRobot;
@@ -30,6 +32,9 @@ public class Drivetrain extends SubsystemBase {
   MotorControllerGroup leftDrive;
   MotorControllerGroup rightDrive;
 
+  RelativeEncoder rightEncoder;
+  RelativeEncoder leftEncoder;
+
   SlewRateLimiter filter;
  
 
@@ -41,6 +46,12 @@ public class Drivetrain extends SubsystemBase {
     leftRearMotor = new CANSparkMax(Constants.leftRearPort, MotorType.kBrushless);
     rightFrontMotorLeader = new CANSparkMax(Constants.rightFrontPort, MotorType.kBrushless);
     rightRearMotor = new CANSparkMax(Constants.rightRearPort, MotorType.kBrushless);
+
+    rightEncoder = rightFrontMotorLeader.getEncoder();
+    leftEncoder = leftFrontMotorLeader.getEncoder();
+
+    rightEncoder.setPosition(0.0);
+    leftEncoder.setPosition(0.0);
 
     
 
@@ -72,6 +83,17 @@ public class Drivetrain extends SubsystemBase {
     robotDrive.arcadeDrive(x * Constants.driveSpeed, (y * -1) * Constants.driveSpeed);
 
   }
+
+  public double getLeftDrivePosition() {
+    return leftEncoder.getPosition();  
+  }
+  public double getRightDrivePosition() {
+    return rightEncoder.getPosition();  
+  }
+
+  public double getDrivePosition() {
+    return (leftEncoder.getPosition() + -rightEncoder.getPosition()) / 2;
+  }
   //public void joyStickDrive(Joystick driveRobot){
   //   robotDrive.arcadeDrive((driveRobot.getRawAxis(Constants.move) * Constants.driveSpeed), -((driveRobot.getRawAxis(Constants.turn) * -1) * Constants.driveSpeed));
   // }
@@ -81,6 +103,9 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Right Side Drive Ticks", rightEncoder.getPosition() );
+    SmartDashboard.putNumber("Left Side Drive Ticks", leftEncoder.getPosition() );
+    SmartDashboard.putNumber("Drive Ticks", getDrivePosition() );
   }
 
   public void stop(){

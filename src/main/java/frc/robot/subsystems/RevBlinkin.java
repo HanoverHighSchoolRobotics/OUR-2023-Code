@@ -1,28 +1,43 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 
 public class RevBlinkin extends SubsystemBase {
   
-  private static Spark m_blinkin = null;
+  private static AddressableLED m_blinkin;
+  private static AddressableLEDBuffer m_ledBuffer;
   public RevBlinkin() {
-    m_blinkin = new Spark(9);
-    solid_orange();
-  }
+    m_blinkin = new AddressableLED(Constants.blinkinPort);
+    //solid_orange();
 
-  public void set(double val) {
-    if ((val >= -1.0) && (val <= 1.0)) {
-      m_blinkin.set(val);
-    }
+    m_ledBuffer = new AddressableLEDBuffer(105);
+
+    m_blinkin.setLength(m_ledBuffer.getLength());
+
+    m_blinkin.setData(m_ledBuffer);
+    m_blinkin.start();
   }
 
   public void rainbow() {
-    set(-0.99);
+
+   int m_rainbowFirstPixelHue = 0;
+
+  for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+  final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
+
+  m_ledBuffer.setHSV(i, hue, 255, 128);
   }
 
-  public void solid_orange() {
-    set(0.65);
+  m_rainbowFirstPixelHue += 3;
+
+  m_rainbowFirstPixelHue %= 180;
+
+
   }
-}
+
+  }

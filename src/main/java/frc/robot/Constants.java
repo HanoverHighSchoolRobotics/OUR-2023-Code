@@ -18,6 +18,7 @@ public final class Constants {
   public static final int leftRearPort = 5;
   public static final int rightFrontPort = 9;
   public static final int rightRearPort = 4;
+  public static final int blinkinPort = 9;
 
   //Non-drive Ports
   public static final int rotationPort = 8;
@@ -36,8 +37,8 @@ public final class Constants {
   public static final double clampSpeed = .3;
   public static final double driveSpeed = .7;
   public static final double rotateSpeed = .1;
-  public static final double armSpeed = .5;
-  public static final double armSpeedU = .7;
+  public static final double armSpeed = .3;
+  public static final double armSpeedU = .3;
 
 
   public static final int move = 1;

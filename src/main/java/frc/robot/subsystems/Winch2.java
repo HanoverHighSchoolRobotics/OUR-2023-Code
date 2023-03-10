@@ -22,7 +22,7 @@ public class Winch2 extends SubsystemBase {
     winchMotor = new CANSparkMax(Constants.winchPort, MotorType.kBrushed);
 
     
-    winchMotor.setIdleMode(IdleMode.kBrake);
+    winchMotor.setIdleMode(IdleMode.kCoast);
 
   }
  

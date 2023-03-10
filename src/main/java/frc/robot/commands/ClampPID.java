@@ -10,30 +10,27 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Claw;
 
-public class ArmPID extends PIDCommand {
-  /** Creates a new ArmPID. */
-  public ArmPID(double distance, Claw claw) {
-    
+public class ClampPID extends PIDCommand {
+  /** Creates a new ClampPID. */
+  public ClampPID(double distance, Claw claw) {
     // Use addRequirements() here to declare subsystem dependencies.
     super(
-      new PIDController(.001, 0, 0), 
-      claw:: getArmPosition,
+      new PIDController(.01, 0, 0), 
+      claw :: getClampPosition,
       distance, 
-      output -> claw.runArm(output * Constants.armSpeedU),
+      output -> claw.runClamp(output * Constants.clampSpeed),
       claw);
-      getController().setTolerance(200);
-      System.out.println("Im working");
+    getController().setTolerance(.7);
+    System.out.println("poopopopop");
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("ARM Initialize");
+    System.out.println("Clamp Init");
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  // @Override
-  // public void execute() {}
+  
 
   // Called once the command ends or is interrupted.
   @Override
