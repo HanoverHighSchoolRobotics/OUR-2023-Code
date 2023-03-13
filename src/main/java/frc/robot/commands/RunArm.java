@@ -4,21 +4,24 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 
 
 public class RunArm extends CommandBase {
   
   double speed;
-  Claw claw;
+  Arm arm;
+  double kF = 0;
 
-  public RunArm(Claw cl, double sp) {
+  public RunArm(Arm a, double sp) {
      
-    claw = cl;
+    arm = a;
     speed = sp;
 
-    addRequirements(claw);
+    addRequirements(arm);
 
   }
 
@@ -30,7 +33,8 @@ public class RunArm extends CommandBase {
   @Override
   public void execute() {
 
-    claw.runArm(speed);
+    // kF = SmartDashboard.getNumber("kF Value", 0);
+    arm.runArm(speed);
 
   }
 
@@ -38,7 +42,7 @@ public class RunArm extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    claw.runArm(0);
+    arm.runArm(0);
 
   }
 

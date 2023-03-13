@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveRobot extends CommandBase {
@@ -32,7 +33,17 @@ public class DriveRobot extends CommandBase {
   public void execute() {
 
     //  driveTrain.driveRobot(Flight2.getRawAxis(1), Flight2.getRawAxis(3));
-     driveTrain.driveRobot(-Flight2.getY(), Flight2.getZ());
+    if (Flight2.getRawButtonPressed(1)) {
+      driveTrain.setDriveSpeed(Constants.TURBO_BOOST);
+    } else if (Flight2.getRawButtonReleased(1)){
+      driveTrain.setDriveSpeed(Constants.driveSpeed);
+    }
+    if (Flight2.getRawButtonPressed(2)){
+      driveTrain.setDriveSpeed(Constants.SPEED_LIMITER);
+    } else if (Flight2.getRawButtonReleased(2)){
+      driveTrain.setDriveSpeed(Constants.driveSpeed);
+    }
+   driveTrain.driveRobot(Math.pow(-Flight2.getY(), 3), Flight2.getZ());
 
   }
 

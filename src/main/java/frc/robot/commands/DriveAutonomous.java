@@ -8,35 +8,28 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Drivetrain;
 
-public class ArmPID extends PIDCommand {
-  /** Creates a new ArmPID. */
-
-  public ArmPID(double distance, Arm arm, double kP, double kI, double kD) {
-    //(Math.cos(arm.ticks2Deg(arm.getArmPosition()))
+public class DriveAutonomous extends PIDCommand {
+  /** Creates a new DriveAutonomous. */
+  public DriveAutonomous(double distance, Drivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     super(
-      new PIDController(kP, kI, kD), 
-      arm:: getArmPosition,
+      new PIDController(.00001, 0,0 ), 
+      drivetrain:: getDrivePosition,
       distance, 
-      output -> arm.runArm(output * Constants.armSpeedU ),
-      arm);
-      getController().setTolerance(1000);
-      System.out.println("Im working");
+      output -> drivetrain.driveRobot(output * Constants.driveSpeed, 0 ),
+      drivetrain);
+      
   }
 
-  
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    System.out.println("ARM Initialize");
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
-  // @Override
-  // public void execute() {}
+  @Override
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

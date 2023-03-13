@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Counter;
@@ -23,23 +24,32 @@ public class Claw extends SubsystemBase {
   Encoder armEncoder;
   Encoder rotateEncoder;
   RelativeEncoder clampEncoder;
+  private final double kTickToDeg = 360 / 512 * 26/42*18/60*18/84;
   
 
   public Claw() {
 
     rotationMotor = new CANSparkMax(Constants.rotationPort, MotorType.kBrushed);
     clampMotor = new CANSparkMax(Constants.clampPort, MotorType.kBrushless);
-    armMotor = new CANSparkMax(Constants.armPort, MotorType.kBrushed);
+    //armMotor = new CANSparkMax(Constants.armPort, MotorType.kBrushed);
 
-    rotationMotor.setIdleMode(IdleMode.kBrake);
+    rotationMotor.setIdleMode(IdleMode.kCoast);
     clampMotor.setIdleMode(IdleMode.kBrake);
-    armMotor.setIdleMode(IdleMode.kCoast);
+    //armMotor.setIdleMode(IdleMode.kCoast);
 
-    armEncoder = new Encoder(8,9, false, Encoder.EncodingType.k4X);
+    //armEncoder = new Encoder(8,9, false, Encoder.EncodingType.k4X);
     rotateEncoder = new Encoder(4, 5);   // wont run until we know ports so ask gabe about it
     clampEncoder = clampMotor.getEncoder();
    
     clampEncoder.setPosition(0.0);
+
+    rotationMotor.setSoftLimit(SoftLimitDirection.kReverse, 4000);
+    rotationMotor.setSoftLimit(SoftLimitDirection.kForward, -4000);
+
+    
+
+
+    
 
    
 
@@ -53,17 +63,23 @@ public class Claw extends SubsystemBase {
 
   public void runRotation(double speed) {
 
-    rotationMotor.set(speed);
+    // if (rotateEncoder.get() <= -4260) {
+    //   rotationMotor.set(0);
+    // } else if (rotateEncoder.get() >= 4200) {
+      // rotationMotor.setSoftLimit(SoftLimitDirection.kReverse, 0);
+    // } else {
+      rotationMotor.set(speed);
+      System.out.println(speed);
+    // }
 
   }
-   public void runArm(double speed) {
-   System.out.println("inim" + speed);
-   armMotor.set(speed);
-   }
-   public double getArmPosition() {
-    return armEncoder.get();
+  //  public void runArm(double speed) {
+  //  armMotor.set(speed);
+  //  }
+  //  public double getArmPosition() {
+  //   return armEncoder.get();
 
-   }
+  //  }
 
    public double getRotatePosition() {
     return rotateEncoder.get();
@@ -78,8 +94,13 @@ public class Claw extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Arm Encoder Ticks", armEncoder.get());
+   // SmartDashboard.putNumber("Arm Encoder Ticks", armEncoder.get());
     SmartDashboard.putNumber("Rotate Encoder Ticks", rotateEncoder.get());
     SmartDashboard.putNumber("Clamp Encoder Ticks", clampEncoder.getPosition());
+    //SmartDashboard.putNumber("Tick Constant", (double) 360 / 512 * 26/42*18/60*18/84);
+    // SmartDashboard.putNumber("Arm Encoder Ticks Normal", armEncoder.get());
+    //System.out.println("I am working Smart dashboard");
+    // System.out.println(kTickToDeg);
+    // System.out.println(armEncoder.get());
   }
 }

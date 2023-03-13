@@ -37,7 +37,7 @@ public class Drivetrain extends SubsystemBase {
 
   SlewRateLimiter filter;
  
-
+  private double driveSpeed = Constants.driveSpeed;
 
   public Drivetrain() {
     
@@ -77,13 +77,20 @@ public class Drivetrain extends SubsystemBase {
     rightRearMotor.setIdleMode(IdleMode.kBrake);
 
   }
+  public double TicksToFeet() {
+    return getDrivePosition() * 1/42 *8.45 / 1 * 6 * Math.PI /12;
+  }
 
   public void driveRobot(double x, double y) {
 
-    robotDrive.arcadeDrive(x * Constants.driveSpeed, (y * -1) * Constants.driveSpeed);
+    robotDrive.arcadeDrive(x * driveSpeed, (y * -1) * Constants.TURN_SPEED);
 
+    System.out.println("Podnodnsnodnsondondondsonsdondsondond");
   }
 
+  public void setDriveSpeed(double speed) {
+    driveSpeed = speed;
+  }
   public double getLeftDrivePosition() {
     return leftEncoder.getPosition();  
   }
@@ -106,6 +113,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Right Side Drive Ticks", rightEncoder.getPosition() );
     SmartDashboard.putNumber("Left Side Drive Ticks", leftEncoder.getPosition() );
     SmartDashboard.putNumber("Drive Ticks", getDrivePosition() );
+    SmartDashboard.putNumber("Ticks to feet", TicksToFeet() );
   }
 
   public void stop(){

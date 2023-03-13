@@ -11,11 +11,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ArmPID;
 import frc.robot.commands.ClampPID;
+import frc.robot.commands.DriveAutonomous;
+//import frc.robot.commands.ControlArm;
 import frc.robot.commands.DriveRobot;
 import frc.robot.commands.RotateClaw;
 import frc.robot.commands.RunArm;
 import frc.robot.commands.RunClamp;
 import frc.robot.commands.RunWinch;
+import frc.robot.subsystems.Arm;
 // import frc.robot.commands.WinchU;
 // import frc.robot.commands.WinchU;
 import frc.robot.subsystems.Claw;
@@ -42,13 +45,15 @@ public class RobotContainer {
   private final Drivetrain drivetrain = new Drivetrain();
   private final Claw claw = new Claw();
   private final Winch2 winch = new Winch2();
+  private final Arm arm = new Arm();
   
 
 
 
   
 
-  private final DriveRobot driveRobot; 
+  private final DriveRobot driveRobot;
+  //private final ControlArm controlArm; 
  
   // Replace with CommandPS4Controller or CommandJoystick if needed
   
@@ -61,7 +66,8 @@ public class RobotContainer {
     Flight1 = new Joystick(Constants.Flight1Port);
     Flight2 = new Joystick(Constants.Flight2Port);
 
-
+    // controlArm = new ControlArm(claw, Flight2);
+    // claw.setDefaultCommand(controlArm);
 
     driveRobot = new DriveRobot(drivetrain, Flight1);
     drivetrain.setDefaultCommand(driveRobot);
@@ -88,7 +94,7 @@ public class RobotContainer {
     // Good luck guys thank you for covering
 
     //PS4Controller
- 
+    //boolean toggle = false;
     JoystickButton Flight2Button1 = new JoystickButton(Flight2, 1);
     JoystickButton Flight2Button2 = new JoystickButton(Flight2, 2);
     JoystickButton Flight2Button5 = new JoystickButton(Flight2, 5);
@@ -100,40 +106,82 @@ public class RobotContainer {
     JoystickButton Flight2Button9 = new JoystickButton(Flight2, 9);
     JoystickButton Flight2Button10 = new JoystickButton(Flight2, 10);
     JoystickButton Flight2Button11 = new JoystickButton(Flight2, 11);
+    JoystickButton Flight2Button12 = new JoystickButton(Flight2, 12);
+ 
 
-
+    
+    //Close Clamp
     Flight2Button1.onTrue(new RunClamp(claw, -Constants.clampSpeed));
     Flight2Button1.onFalse(new RunClamp(claw, Constants.stopSpeed));
     
+    //Open Clamp
      Flight2Button2.onTrue(new RunClamp(claw, Constants.clampSpeed));
      Flight2Button2.onFalse(new RunClamp(claw, Constants.stopSpeed));
 
-     Flight2Button5.onTrue(new RotateClaw(claw, Constants.rotateSpeed));
-     Flight2Button5.onFalse(new RotateClaw(claw, Constants.stopSpeed));
+     //Pick Up
+     Flight2Button3.onTrue(new ArmPID(-50666, arm, 0.00007,0.09, 0.00004));  // IMPORTANT PLEASE LOOK AT ENCODER VALUES TO ADJUST THE DISTANCE WE DO NOT WANT OUR CLAW TO GO TOO FAR THAT WOULD BREAK IT
+     Flight2Button3.onFalse(new RunArm(arm, Constants.stopSpeed ));
 
-     Flight2Button6.onTrue(new RotateClaw(claw, -Constants.rotateSpeed));
-     Flight2Button6.onFalse(new RotateClaw(claw, Constants.stopSpeed));
+     //Back to start
+     Flight2Button4.onTrue(new ArmPID(-18666.667, arm, .005, 0.07, 0.00003));
+     Flight2Button4.onFalse(new RunArm(arm, Constants.stopSpeed ));
 
-    Flight2Button4.onTrue(new RunWinch(winch, Constants.winchSpeed));
-    Flight2Button4.onFalse(new RunWinch(winch, Constants.stopSpeed));
 
-    Flight2Button3.onTrue(new RunWinch(winch, -Constants.winchSpeed));
-    Flight2Button3.onFalse(new RunWinch(winch, Constants.stopSpeed));
+    // Mid Cone 
+     Flight2Button5.onTrue(new ArmPID(arm.deg2Ticks(-120), arm, .00004, 0.07,0.00003));
+     Flight2Button5.onFalse(new RunArm(arm, Constants.stopSpeed ));
 
-    Flight2Button7.onTrue(new RunArm(claw, -Constants.armSpeed));
-    Flight2Button7.onFalse(new RunArm(claw, Constants.stopSpeed));
+    // Rotate Left
+     Flight2Button7.onTrue(new RotateClaw(claw, Constants.rotateSpeed));
+     Flight2Button7.onFalse(new RotateClaw(claw, Constants.stopSpeed));
 
-    Flight2Button8.onTrue(new RunArm(claw, Constants.armSpeedU));
-    Flight2Button8.onFalse(new RunArm(claw, Constants.stopSpeed));
+     // Rotate Right
+     Flight2Button8.onTrue(new RotateClaw(claw, -Constants.rotateSpeed));
+     Flight2Button8.onFalse(new RotateClaw(claw, Constants.stopSpeed));
 
-    Flight2Button9.onTrue(new ArmPID(7000, claw));
-    Flight2Button9.onFalse(new RunArm(claw, Constants.stopSpeed ));
+     //Winch Up
 
-    Flight2Button10.onTrue(new ClampPID(-.9, claw));  // IMPORTANT PLEASE LOOK AT ENCODER VALUES TO ADJUST THE DISTANCE WE DO NOT WANT OUR CLAW TO GO TOO FAR THAT WOULD BREAK IT
-    Flight2Button10.onFalse(new RunClamp(claw, Constants.stopSpeed ));
+    //Flight2Button9.onTrue(new RunWinch(winch, Constants.winchSpeed));
+    //Flight2Button9.onFalse(new RunWinch(winch, Constants.stopSpeed));
 
-    Flight2Button11.onTrue(new ClampPID(0, claw));  // IMPORTANT PLEASE LOOK AT ENCODER VALUES TO ADJUST THE DISTANCE WE DO NOT WANT OUR CLAW TO GO TOO FAR THAT WOULD BREAK IT
-    Flight2Button11.onFalse(new RunClamp(claw, Constants.stopSpeed ));
+    Flight2Button9.onTrue(new RunArm(arm, 0));
+    Flight2Button9.onFalse( new RunArm(arm, -3));
+    
+    //Winch Down
+    Flight2Button10.onTrue(new RunWinch(winch, -Constants.winchSpeed));
+    Flight2Button10.onFalse(new RunWinch(winch, Constants.stopSpeed));
+    
+    // Arm Down Manual
+    Flight2Button12.onTrue(new RunArm(arm, -Constants.armSpeed));
+    Flight2Button12.onFalse(new RunArm(arm, Constants.stopSpeed));
+
+    //Arm Up Manual
+    Flight2Button11.onTrue(new RunArm(arm, Constants.armSpeedU));
+    Flight2Button11.onFalse(new RunArm(arm, Constants.stopSpeed));
+
+    // Flight2Button5.onTrue(new ArmPID(-19000, arm, .00005, 0.07,0.00003));
+    // Flight2Button5.onFalse(new RunArm(arm, Constants.stopSpeed ));
+
+    // if (Flight2.getRawButtonPressed(9)) {
+    //    if (toggle) {
+    //     new RunArm(claw, Constants.stopSpeed);
+    //     toggle = false;
+    //     System.out.println("Arm pid id woring Falsi");
+    //    } else {
+    //     new ArmPID(-19000, claw, .00005);
+    //     toggle = true;
+    //     System.out.println("Arm pid id woring");
+    //    }
+    // }
+
+    // Flight2Button4.onTrue(new ArmPID(0, arm, .005, 0.07, 0.00003));
+    // Flight2Button4.onFalse(new RunArm(arm, Constants.stopSpeed ));
+
+    // Flight2Button10.onTrue(new ClampPID(-.9, claw));  // IMPORTANT PLEASE LOOK AT ENCODER VALUES TO ADJUST THE DISTANCE WE DO NOT WANT OUR CLAW TO GO TOO FAR THAT WOULD BREAK IT
+    // Flight2Button10.onFalse(new RunClamp(claw, Constants.stopSpeed ));
+
+    // Flight2Button3.onTrue(new ArmPID(-32000, arm, 0.00007,0.09, 0.00004));  // IMPORTANT PLEASE LOOK AT ENCODER VALUES TO ADJUST THE DISTANCE WE DO NOT WANT OUR CLAW TO GO TOO FAR THAT WOULD BREAK IT
+    // Flight2Button3.onFalse(new RunArm(arm, Constants.stopSpeed ));
 
 
 
@@ -187,6 +235,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return new DriveAutonomous(149, drivetrain);
+    
   }
 }
