@@ -43,7 +43,7 @@ public class DriveRobot extends CommandBase {
     } else if (Flight2.getRawButtonReleased(2)){
       driveTrain.setDriveSpeed(Constants.driveSpeed);
     }
-   driveTrain.driveRobot(Math.pow(-Flight2.getY(), 3), Flight2.getZ());
+   driveTrain.driveRobot((-Flight2.getY()), Flight2.getZ());
 
   }
 

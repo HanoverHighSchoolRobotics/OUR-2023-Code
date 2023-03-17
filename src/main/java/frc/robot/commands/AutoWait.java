@@ -4,40 +4,46 @@
 
 package frc.robot.commands;
 
+import java.sql.Time;
+
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveAutonomous extends PIDCommand {
+public class AutoWait extends CommandBase {
   /** Creates a new DriveAutonomous. */
-  public DriveAutonomous(double distance, Drivetrain drivetrain) {
+  private final double duration;
+  private long startTime;
+
+  public AutoWait(double time) {
     // Use addRequirements() here to declare subsystem dependencies.
-    super(
-      new PIDController(.00001, 0,0 ), 
-      drivetrain:: getDrivePosition,
-      distance, 
-      output -> drivetrain.driveRobot(output * Constants.driveSpeed, 0 ),
-      drivetrain);
-      
+    this.duration = time * 1000;    
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("Starting Timer");
+    this.startTime = System.currentTimeMillis();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() { }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("ending Wait");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (System.currentTimeMillis() - this.startTime) >= this.duration; //this.currentTime > this.seconds;
+    
   }
 }

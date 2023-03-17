@@ -18,7 +18,7 @@ public class Arm extends SubsystemBase {
   /** Creates a new Arm. */
 
   CANSparkMax armMotor;
-  Encoder armEncoder;
+  //Encoder armEncoder;
 
   double kDeg2Ticks;
 
@@ -30,12 +30,12 @@ public class Arm extends SubsystemBase {
 
   public Arm() {
     armMotor = new CANSparkMax(Constants.armPort, MotorType.kBrushed);
-    armMotor.setIdleMode(IdleMode.kCoast);
+    armMotor.setIdleMode(IdleMode.kBrake);
 
 
-    armEncoder = new Encoder(8,9, false, Encoder.EncodingType.k4X);
+    //armEncoder = new Encoder(8,9, false, Encoder.EncodingType.k4X);
 
-    armTicks = armEncoder.get();
+    //armTicks = armEncoder.get();
   }
   public double deg2Ticks(double degrees){
     return degrees / 360 * (countsPerRev * gearReduction);
@@ -46,19 +46,13 @@ public class Arm extends SubsystemBase {
   }
 
   public void runArm(double speed) {
-    //armMotor.set(speed + Math.cos(ticks2Deg(getArmPosition())) *kF);
-
-    // if (speed != -3) {
-    //   armMotor.set(speed + Math.cos(ticks2Deg(getArmPosition())) *kF);
-    // } else {
-    //   armMotor.set(0);
-    // }
+    armMotor.set(speed);
 
     }
-    public double getArmPosition() {
-     return armEncoder.get() - deg2Ticks(60);
+    // public double getArmPosition() {
+    //  return armEncoder.get() - deg2Ticks(60);
  
-    }
+    // }
     public void stopMotor() {
       armMotor.set(0);
     }
@@ -66,8 +60,8 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Arm Encoder Ticks", getArmPosition());
-    SmartDashboard.putNumber("Arm Encoder Degrees", ticks2Deg(getArmPosition()) );
+    // SmartDashboard.putNumber("Arm Encoder Ticks", getArmPosition());
+    // SmartDashboard.putNumber("Arm Encoder Degrees", ticks2Deg(getArmPosition()) );
     SmartDashboard.putNumber("kF", kF);
     kF = SmartDashboard.getNumber("kF", kF);
   }

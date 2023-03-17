@@ -34,6 +34,7 @@ public class RunArm extends CommandBase {
   public void execute() {
 
     // kF = SmartDashboard.getNumber("kF Value", 0);
+    System.out.println(speed);
     arm.runArm(speed);
 
   }

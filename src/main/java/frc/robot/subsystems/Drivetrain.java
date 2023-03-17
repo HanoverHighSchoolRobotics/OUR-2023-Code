@@ -36,6 +36,7 @@ public class Drivetrain extends SubsystemBase {
   RelativeEncoder leftEncoder;
 
   SlewRateLimiter filter;
+  public double ticksPerRotation = 42;
  
   private double driveSpeed = Constants.driveSpeed;
 
@@ -78,14 +79,16 @@ public class Drivetrain extends SubsystemBase {
 
   }
   public double TicksToFeet() {
-    return getDrivePosition() * 1/42 *8.45 / 1 * 6 * Math.PI /12;
+    return (getDrivePosition() * (Math.PI *6)) / ticksPerRotation;
   }
+
+  
 
   public void driveRobot(double x, double y) {
 
     robotDrive.arcadeDrive(x * driveSpeed, (y * -1) * Constants.TURN_SPEED);
 
-    System.out.println("Podnodnsnodnsondondondsonsdondsondond");
+    //System.out.println("Podnodnsnodnsondondondsonsdondsondond");
   }
 
   public void setDriveSpeed(double speed) {
@@ -99,14 +102,12 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getDrivePosition() {
-    return (leftEncoder.getPosition() + -rightEncoder.getPosition()) / 2;
+    return (leftEncoder.getPosition() + rightEncoder.getPosition()) / 2;
   }
-  //public void joyStickDrive(Joystick driveRobot){
-  //   robotDrive.arcadeDrive((driveRobot.getRawAxis(Constants.move) * Constants.driveSpeed), -((driveRobot.getRawAxis(Constants.turn) * -1) * Constants.driveSpeed));
-  // }
-  //public void driveBackward(){
-//robotDrive.tankDrive(Constants.speed, Constants.speed);
- // }
+  public void setMotorSpeed(double leftDriveSpeed, double rightDriveSpeed) {
+    leftFrontMotorLeader.set(leftDriveSpeed);
+    rightFrontMotorLeader.set(rightDriveSpeed);
+   }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -18,13 +18,13 @@ public final class Constants {
   public static final int leftRearPort = 5;
   public static final int rightFrontPort = 9;
   public static final int rightRearPort = 4;
-  public static final int blinkinPort = 9;
+ // public static final int blinkinPort = 9;
 
   //Non-drive Ports
-  public static final int rotationPort = 8;
+  public static final int rotationPort = 3;
   public static final int clampPort = 6;
-  public static final int winchPort = 2;
-  public static final int armPort = 3;
+  // public static final int winchPort = ;
+  public static final int armPort = 2;
   public static final int Flight2Port = 0;
   public static final int Flight1Port = 1;
 
@@ -35,11 +35,11 @@ public final class Constants {
   public static final double winchSpeedD = -.3;
   public static final double speed = .5;
   public static final double clampSpeed = .1;
-  public static final double driveSpeed = .7;
-  public static final double rotateSpeed = .1;
-  public static final double armSpeed = .6;
-  public static final double armSpeedU = .3;
-  public static final double TURN_SPEED = .5;
+  public static final double driveSpeed = .8;
+  public static final double rotateSpeed = .15;
+  public static final double armSpeed = .3;
+  public static final double armSpeedU = .6;
+  public static final double TURN_SPEED = .7;
 
   public static final double SPEED_LIMITER = .3;
   public static final double TURBO_BOOST = 1;
