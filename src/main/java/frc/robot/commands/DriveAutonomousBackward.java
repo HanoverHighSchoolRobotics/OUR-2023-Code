@@ -36,7 +36,7 @@ public class DriveAutonomousBackward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.setMotorSpeed(-0.5,- 0.5);
+    drivetrain.setMotorSpeed(-0.4,- 0.4);
   }
 
   // Called once the command ends or is interrupted.

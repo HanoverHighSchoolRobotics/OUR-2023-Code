@@ -33,11 +33,11 @@ public class DriveRobot extends CommandBase {
   public void execute() {
 
     //  driveTrain.driveRobot(Flight2.getRawAxis(1), Flight2.getRawAxis(3));
-    if (Flight2.getRawButtonPressed(1)) {
-      driveTrain.setDriveSpeed(Constants.TURBO_BOOST);
-    } else if (Flight2.getRawButtonReleased(1)){
-      driveTrain.setDriveSpeed(Constants.driveSpeed);
-    }
+    // if (Flight2.getRawButtonPressed(1)) {
+    //   driveTrain.setDriveSpeed(Constants.TURBO_BOOST);
+    // } else if (Flight2.getRawButtonReleased(1)){
+    //   driveTrain.setDriveSpeed(Constants.driveSpeed);
+    // }
     if (Flight2.getRawButtonPressed(2)){
       driveTrain.setDriveSpeed(Constants.SPEED_LIMITER);
     } else if (Flight2.getRawButtonReleased(2)){

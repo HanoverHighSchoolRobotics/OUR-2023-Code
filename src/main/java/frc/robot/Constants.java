@@ -35,13 +35,13 @@ public final class Constants {
   public static final double winchSpeedD = -.3;
   public static final double speed = .5;
   public static final double clampSpeed = .1;
-  public static final double driveSpeed = .8;
+  public static final double driveSpeed = 1;
   public static final double rotateSpeed = .15;
   public static final double armSpeed = .3;
   public static final double armSpeedU = .6;
   public static final double TURN_SPEED = .7;
 
-  public static final double SPEED_LIMITER = .3;
+  public static final double SPEED_LIMITER = .6;
   public static final double TURBO_BOOST = 1;
 
 
