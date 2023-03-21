@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.commands.ArmPID;
 import frc.robot.commands.AutoWait;
+import frc.robot.commands.AutonomousChargeStation;
 // import frc.robot.commands.ClampPID;
 //import frc.robot.commands.DriveAutonomous;
 import frc.robot.commands.DriveAutonomousBackward;
@@ -152,13 +153,22 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new SequentialCommandGroup( //
-   // new DriveAutonomousF(drivetrain, .25),
-   //new DriveAutonomousF(drivetrain, 2),
-   new DriveAutonomousBackward(drivetrain, 30),
-    new AutoWait(2),
-   new DriveAutonomousF(drivetrain, 20)
-    );
+    return  new AutonomousChargeStation(drivetrain);//
+      // new DriveAutonomousF(drivetrain, .25),
+      //  new DriveAutonomousF(drivetrain, 2),
+  
+      // Cone BUMP
+      // new DriveAutonomousBackward(drivetrain, 4),
+      // new DriveAutonomousF(drivetrain, 4),
+      
+      // Leave home area
+      // new DriveAutonomousBackward(drivetrain, 33),
+      
+      // //Back to charge
+      // new AutoWait(1),
+      // new DriveAutonomousF(drivetrain, 18.3)
+      
+    
 
 
 
