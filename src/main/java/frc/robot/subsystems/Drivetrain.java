@@ -10,9 +10,12 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,6 +23,7 @@ import frc.robot.commands.DriveRobot;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
+
 
   // Variables
   CANSparkMax leftFrontMotorLeader;
@@ -40,6 +44,8 @@ public class Drivetrain extends SubsystemBase {
  
   private double driveSpeed = Constants.driveSpeed;
 
+  private ADXRS450_Gyro gyro = new ADXRS450_Gyro(); 
+
   public Drivetrain() {
     
     //Assigning ports to Motors
@@ -53,6 +59,11 @@ public class Drivetrain extends SubsystemBase {
 
     rightEncoder.setPosition(0.0);
     leftEncoder.setPosition(0.0);
+
+      //new gyro
+
+    gyro.calibrate();
+
 
     
 
@@ -83,7 +94,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   
-
+  
   public void driveRobot(double x, double y) {
 
     robotDrive.arcadeDrive(x * driveSpeed, (y * -1) * Constants.TURN_SPEED);
@@ -115,9 +126,15 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Left Side Drive Ticks", leftEncoder.getPosition() );
     SmartDashboard.putNumber("Drive Ticks", getDrivePosition() );
     SmartDashboard.putNumber("Ticks to feet", TicksToFeet() );
+    
+    SmartDashboard.putData(gyro);
+
+
+
   }
 
   public void stop(){
     robotDrive.stopMotor();
+    gyro.close();
   }
 }

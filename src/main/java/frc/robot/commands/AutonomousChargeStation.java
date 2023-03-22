@@ -6,16 +6,22 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
 
 public class AutonomousChargeStation extends SequentialCommandGroup {
   /** Creates a new AutonomousChargeStation. */
-  public AutonomousChargeStation(Drivetrain drivetrain) {
+  public AutonomousChargeStation(Drivetrain drivetrain, Arm arm, Claw claw) {
     // Use addRequirements() here to declare subsystem dependencies.
 
       addCommands(
-        new DriveAutonomousBackward(drivetrain, 33),
-        new AutoWait(1),
-        new DriveAutonomousF(drivetrain, 18.3)
+       new AutoDropArm(1, arm),
+       new AutoOpenClamp(.01, claw),
+       new AutoUpArm(1, arm),
+       new AutoCloseClamp(.01, claw)
+      //  new DriveAutonomousBackward(drivetrain, 33),
+      //  new AutoWait(1),
+      //  new DriveAutonomousF(drivetrain, 18.3)
       );
 
 

@@ -4,59 +4,52 @@
 
 package frc.robot.commands;
 
+import java.sql.Time;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveAutonomousBackward extends CommandBase {
+public class AutoDropArm extends CommandBase {
   /** Creates a new DriveAutonomous. */
-  private final Drivetrain drivetrain;
-  private final double distance;
-  private double encoderSetpoint;
-  public DriveAutonomousBackward(Drivetrain dt, double dis) {
-    drivetrain = dt;
-    distance = dis;
+  private final double duration;
+  private long startTime;
+  private Arm arm;
+
+  public AutoDropArm(double time, Arm a) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivetrain);
-      
+    this.duration = time * 1000;  
+    this.arm = a;  
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("Starting Auto Init drive backward: " + drivetrain.TicksToFeet() + distance);
-    encoderSetpoint = drivetrain.TicksToFeet() + distance;
-    //SmartDashboard.putNumber("Starting Ticks", drivetrain.TicksToFeet() + distance );
-
+    System.out.println("Starting Timer");
+    this.startTime = System.currentTimeMillis();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    drivetrain.setMotorSpeed(-0.4,-0.4);
+  public void execute() { 
+    arm.runArm(-0.3);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.setMotorSpeed(0,0);
-    System.out.println("ending " + Math.abs(drivetrain.TicksToFeet()));
+    System.out.println("ending Wait");
+    arm.runArm(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-   //SmartDashboard.putNumber("end Ticks", Math.abs(drivetrain.TicksToFeet()) );
-    return Math.abs(drivetrain.TicksToFeet()) >= encoderSetpoint;
+    return (System.currentTimeMillis() - this.startTime) >= this.duration; //this.currentTime > this.seconds;
     
-    // if (drivetrain.TicksToFeet() > encoderSetpoint) {
-    //   return true;
-    
-    // } else {
-    // return false;
-    // }
   }
 }

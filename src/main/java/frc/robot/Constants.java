@@ -27,6 +27,7 @@ public final class Constants {
   public static final int armPort = 2;
   public static final int Flight2Port = 0;
   public static final int Flight1Port = 1;
+  public static final int kGyroPort = 0;
 
 
   //Speeds

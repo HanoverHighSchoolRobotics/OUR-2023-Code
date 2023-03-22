@@ -8,19 +8,19 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Drivetrain;
 
-public class ClampPID extends PIDCommand {
+public class DrivePID2 extends PIDCommand {
   /** Creates a new ClampPID. */
-  public ClampPID(double distance, Claw claw) {
+  public DrivePID2(double distance, Drivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     super(
-      new PIDController(.01, 0, 0), 
-      claw :: getClampPosition,
+      new PIDController(.00001, 0, 0), 
+      drivetrain :: getDrivePosition,
       distance, 
-      output -> claw.runClamp(output * Constants.clampSpeed),
-      claw);
-    getController().setTolerance(.7);
+      output -> drivetrain.setMotorSpeed(-.5,-.5),
+      drivetrain);
+    
     System.out.println("poopopopop");
   }
 

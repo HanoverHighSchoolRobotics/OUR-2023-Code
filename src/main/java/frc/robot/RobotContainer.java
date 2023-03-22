@@ -18,6 +18,8 @@ import frc.robot.commands.AutonomousChargeStation;
 //import frc.robot.commands.DriveAutonomous;
 import frc.robot.commands.DriveAutonomousBackward;
 import frc.robot.commands.DriveAutonomousF;
+import frc.robot.commands.DrivePID;
+import frc.robot.commands.DrivePID2;
 //import frc.robot.commands.ControlArm;
 import frc.robot.commands.DriveRobot;
 import frc.robot.commands.RotateClaw;
@@ -153,7 +155,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return  new AutonomousChargeStation(drivetrain);//
+    return  // DrivePID2(33, drivetrain);
+    new AutonomousChargeStation(drivetrain,arm, claw);//
       // new DriveAutonomousF(drivetrain, .25),
       //  new DriveAutonomousF(drivetrain, 2),
   
