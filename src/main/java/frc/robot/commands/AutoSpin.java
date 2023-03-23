@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -29,6 +30,10 @@ public class AutoSpin extends CommandBase {
         this.targetHeading = this.initialHeading + this.degrees;
         this.lowerBound = this.targetHeading - this.TOLERANCE;
         this.upperBound = this.targetHeading + this.TOLERANCE;
+        SmartDashboard.putNumber("InitialHeading: ", this.initialHeading);
+        SmartDashboard.putNumber("InitialTarget: ", this.targetHeading);
+        SmartDashboard.putNumber("Init UpperBound: ", this.upperBound);
+        SmartDashboard.putNumber("Init LowerBound: ", this.lowerBound);
     }
 
     @Override
@@ -38,6 +43,8 @@ public class AutoSpin extends CommandBase {
         if (modifier < .1) {
             modifier = .1;
         }
+        SmartDashboard.putNumber("Spin Progress" , progress);
+        SmartDashboard.putNumber("Power Modifier" , modifier);
         drivetrain.setMotorSpeed(modifier, -modifier);
     }
 
@@ -50,6 +57,12 @@ public class AutoSpin extends CommandBase {
     public boolean isFinished() {
         this.currentHeading = this.drivetrain.getHeading();
         double headingProgress = this.targetHeading - this.currentHeading;
+        SmartDashboard.putNumber("Current Heading" , this.currentHeading);
+        SmartDashboard.putNumber("Target Heading" , this.targetHeading);
+        SmartDashboard.putNumber("Heading Progress" , headingProgress);
+        SmartDashboard.putBoolean("SPIN ISFINISHED" , (headingProgress <= this.upperBound && headingProgress >= this.lowerBound));
+        SmartDashboard.putNumber("UpperBound" , this.upperBound);
+        SmartDashboard.putNumber("LowerBound" , this.lowerBound);
         return (headingProgress <= this.upperBound && headingProgress >= this.lowerBound);
     }
 }
