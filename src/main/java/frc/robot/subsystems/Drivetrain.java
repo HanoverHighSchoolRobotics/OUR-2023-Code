@@ -119,6 +119,10 @@ public class Drivetrain extends SubsystemBase {
     leftFrontMotorLeader.set(leftDriveSpeed);
     rightFrontMotorLeader.set(rightDriveSpeed);
    }
+
+   public double getHeading() {
+    return this.gyro.getAngle();
+   }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

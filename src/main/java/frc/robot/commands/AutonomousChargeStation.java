@@ -18,10 +18,12 @@ public class AutonomousChargeStation extends SequentialCommandGroup {
        new AutoDropArm(1, arm),
        new AutoOpenClamp(.01, claw),
        new AutoUpArm(1, arm),
-       new AutoCloseClamp(.01, claw)
+       new AutoCloseClamp(.01, claw),
       //  new DriveAutonomousBackward(drivetrain, 33),
       //  new AutoWait(1),
-      //  new DriveAutonomousF(drivetrain, 18.3)
+      //  new DriveAutonomousF(drivetrain, 18.3),
+      new AutoWait(.5),
+      new AutoSpin(180, drivetrain)
       );
 
 
