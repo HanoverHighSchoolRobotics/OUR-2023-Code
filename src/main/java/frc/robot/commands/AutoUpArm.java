@@ -9,10 +9,9 @@ import java.sql.Time;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
+
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drivetrain;
+
 
 public class AutoUpArm extends CommandBase {
   /** Creates a new DriveAutonomous. */

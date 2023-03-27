@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoPark;
 // import frc.robot.commands.ArmPID;
 import frc.robot.commands.AutoWait;
 import frc.robot.commands.AutonomousChargeStation;
@@ -22,7 +23,7 @@ import frc.robot.commands.DrivePID;
 import frc.robot.commands.DrivePID2;
 //import frc.robot.commands.ControlArm;
 import frc.robot.commands.DriveRobot;
-import frc.robot.commands.RotateClaw;
+// import frc.robot.commands.RotateClaw;
 import frc.robot.commands.RunArm;
 import frc.robot.commands.RunClamp;
 //import frc.robot.commands.RunWinch;
@@ -130,13 +131,13 @@ public class RobotContainer {
      Flight2Button4.onFalse(new RunArm(arm, Constants.stopSpeed ));
 
 
-    // Rotate
-     Flight2Button5.onTrue(new RotateClaw(claw, Constants.rotateSpeed));
-     Flight2Button5.onFalse(new RotateClaw(claw, Constants.stopSpeed ));
+    // // Rotate
+    //  Flight2Button5.onTrue(new RotateClaw(claw, Constants.rotateSpeed));
+    //  Flight2Button5.onFalse(new RotateClaw(claw, Constants.stopSpeed ));
 
-    // Rotate 
-     Flight2Button6.onTrue(new RotateClaw(claw, -Constants.rotateSpeed));
-     Flight2Button6.onFalse(new RotateClaw(claw, Constants.stopSpeed));
+    // // Rotate 
+    //  Flight2Button6.onTrue(new RotateClaw(claw, -Constants.rotateSpeed));
+    //  Flight2Button6.onFalse(new RotateClaw(claw, Constants.stopSpeed));
     
     
 
@@ -155,34 +156,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return  // DrivePID2(33, drivetrain);
-    new AutonomousChargeStation(drivetrain,arm, claw);//
-      // new DriveAutonomousF(drivetrain, .25),
-      //  new DriveAutonomousF(drivetrain, 2),
-  
-      // Cone BUMP
-      // new DriveAutonomousBackward(drivetrain, 4),
-      // new DriveAutonomousF(drivetrain, 4),
-      
-      // Leave home area
-      // new DriveAutonomousBackward(drivetrain, 33),
-      
-      // //Back to charge
-      // new AutoWait(1),
-      // new DriveAutonomousF(drivetrain, 18.3)
-      
-    
-
-
-
-    // if (time < 1) {
-    // new RunArm(arm, -0.3), 
-    // new RunArm(arm, -0.1);
-    // } 
-    
-    // if (time < 1) {
-    // new RunClamp(claw, -0.1 );
-    // }
+    return  
+     //new AutonomousChargeStation(drivetrain,arm, claw);
+   new AutoPark(drivetrain,arm, claw);
     
     
   }

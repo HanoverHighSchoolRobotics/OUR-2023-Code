@@ -38,7 +38,7 @@ public class AutoSpin extends CommandBase {
         if (modifier < .1) {
             modifier = .1;
         }
-        drivetrain.setMotorSpeed(modifier, -modifier);
+        drivetrain.setMotorSpeed(-modifier, modifier);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class AutoSpin extends CommandBase {
     @Override
     public boolean isFinished() {
         this.currentHeading = this.drivetrain.getHeading();
-        double headingProgress = this.targetHeading - this.currentHeading;
-        return (headingProgress <= this.upperBound && headingProgress >= this.lowerBound);
+        //double headingProgress = this.targetHeading - this.currentHeading;
+        return (this.currentHeading <= this.upperBound && this.currentHeading >= this.lowerBound);
     }
 }

@@ -9,9 +9,9 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 
-public class AutonomousChargeStation extends SequentialCommandGroup {
+public class AutoPark extends SequentialCommandGroup {
   /** Creates a new AutonomousChargeStation. */
-  public AutonomousChargeStation(Drivetrain drivetrain, Arm arm, Claw claw) {
+  public AutoPark(Drivetrain drivetrain, Arm arm, Claw claw) {
     // Use addRequirements() here to declare subsystem dependencies.
 
       addCommands(
@@ -20,8 +20,8 @@ public class AutonomousChargeStation extends SequentialCommandGroup {
        new AutoUpArm(1, arm),
        new AutoCloseClamp(.01, claw),
        new DriveAutonomousBackward(drivetrain, 33),
-       new AutoWait(2),
-       new DriveAutonomousF(drivetrain, 18)
+       new AutoWait(1)
+      // new AutoSpin(180, drivetrain)
       );
 
 
