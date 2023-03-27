@@ -15,6 +15,7 @@ import frc.robot.commands.AutoPark;
 // import frc.robot.commands.ArmPID;
 import frc.robot.commands.AutoWait;
 import frc.robot.commands.AutonomousChargeStation;
+import frc.robot.commands.AutonomousPark;
 // import frc.robot.commands.ClampPID;
 //import frc.robot.commands.DriveAutonomous;
 import frc.robot.commands.DriveAutonomousBackward;
@@ -107,8 +108,8 @@ public class RobotContainer {
     //boolean toggle = false;
     JoystickButton Flight2Button1 = new JoystickButton(Flight2, 1);
     JoystickButton Flight2Button2 = new JoystickButton(Flight2, 2);
-    JoystickButton Flight2Button5 = new JoystickButton(Flight2, 7);
-    JoystickButton Flight2Button6 = new JoystickButton(Flight2, 8);
+    // JoystickButton Flight2Button5 = new JoystickButton(Flight2, 7);
+    // JoystickButton Flight2Button6 = new JoystickButton(Flight2, 8);
     JoystickButton Flight2Button3 = new JoystickButton(Flight2, 3);
     JoystickButton Flight2Button4 = new JoystickButton(Flight2, 4);
     
@@ -159,7 +160,7 @@ public class RobotContainer {
     return  
      //new AutonomousChargeStation(drivetrain,arm, claw);
    new AutoPark(drivetrain,arm, claw);
-    
-    
+
+  
   }
 }

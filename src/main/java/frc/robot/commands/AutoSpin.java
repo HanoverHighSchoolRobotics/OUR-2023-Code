@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -29,6 +30,10 @@ public class AutoSpin extends CommandBase {
         this.targetHeading = this.initialHeading + this.degrees;
         this.lowerBound = this.targetHeading - this.TOLERANCE;
         this.upperBound = this.targetHeading + this.TOLERANCE;
+        SmartDashboard.putNumber("InitialHeading: ", this.initialHeading);
+        SmartDashboard.putNumber("InitialTarget: ", this.targetHeading);
+        SmartDashboard.putNumber("Init UpperBound: ", this.upperBound);
+        SmartDashboard.putNumber("Init LowerBound: ", this.lowerBound);
     }
 
     @Override
